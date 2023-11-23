@@ -1,0 +1,25 @@
+{% extends "./base.html" %}
+{% block title %}Calendario{% endblock %}
+{% block body %}
+
+<head>
+    <h1>eventos del sena</h1>
+    <meta charset='utf-8' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+    <script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth'
+        });
+        calendar.render();
+      });
+
+    </script>
+  </head>
+  <body>
+    <div id='calendar' class="container" style="padding: 20px;"></div>
+  </body>
+
+{% endblock %}

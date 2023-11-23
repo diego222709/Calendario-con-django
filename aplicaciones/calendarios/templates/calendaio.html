@@ -1,0 +1,54 @@
+{% extends "./base.html" %}
+{% block title %}Calendario{% endblock %}
+{% block body %}
+  <h1>Eventos del Sena</h1>
+  <meta charset='utf-8' />
+  <style>
+    .today {
+      background-color: black;
+      color: white;
+    }
+  </style>
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+  <script>
+    function getRandomColor() {
+      var r = Math.floor(Math.random() * 256);
+      var g = Math.floor(Math.random() * 256);
+      var b = Math.floor(Math.random() * 256);
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+
+      var events = [
+        {% for actividad in actividades %}
+        {
+          title: 'Eventos {{ actividad.nombre }}',
+          start: '{{ actividad.fecha_hora_inicio | date:"Y-m-d" }}',
+          end: '{{ actividad.fecha_hora_salida | date:"Y-m-d" }}',
+          backgroundColor: getRandomColor()
+        },
+        {% endfor %}
+      ];
+
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        events: events,
+        locale: 'es',
+        dayRender: function(info) {
+          var today = new Date();
+          today.setHours(0, 0, 0, 0);
+
+          if (info.date.getTime() === today.getTime()) {
+            // Aplicar la clase 'today' al día actual
+            info.dayEl.classList.add('today');
+          }
+        }
+      });
+
+      calendar.render();
+    });
+  </script>
+  <div id='calendar' class="container" style="padding: 100px;"></div>
+{% endblock %}

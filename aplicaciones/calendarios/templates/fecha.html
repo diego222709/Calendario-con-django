@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Calendario{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2>Gestion de fechas</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registrarfechas/" method="post"> {% csrf_token %} 
+                    <div class="form-group">
+                        <label for="name" class="form-label">Codigo</label>
+                        <input type="text" id="txtCodigo" name="txtCodigo" class="form-control" placeholder="Codigo" minlength="6" maxlength="6" required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="name" class="form-label">Nombre</label>
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre"  maxlength="50" required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="name" class="form-label">fecha de incio</label>
+                        <input type="datetime-local" class="form-control" id="fechainicio" name="fechainicio" required>
+                     </div>
+                     <br>
+                     <div class="form-group">
+                        <label for="name" class="form-label">fecha de fin</label>
+                        <input type="datetime-local" class="form-control" id="fechafin" name="fechafin" required>
+                     </div>
+                     <br>
+                    <div class="form-group">
+                       <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+   
+
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Nombre</th>
+                        <th>Fecha de inicio</th>
+                        <th>Fecha de salida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in actividades %}
+                    <tr>
+                        <td>{{ c.codigo }}</td>
+                        <td>{{ c.nombre }}</td>
+                        <td>{{ c.fecha_hora_inicio }}</td>
+                        <td>{{ c.fecha_hora_salida }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
